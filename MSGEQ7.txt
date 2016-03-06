@@ -1,0 +1,91 @@
+Functions
+
+VCC
+
+  Positive 3.3VDC or 5VDC input.
+
+GND
+
+  Power ground.
+
+Reset
+
+  The DC peak output on both channels is selected using the reset and strobe pins. Reset high resets the multiplexor. Reset low enables the strobe pin.
+
+Strobe
+
+  After the first strobe leading edge, 63Hz is output for Left and Right audio channels. If Each additional strobe leading edge advances the multiplexor one channel (63Hz, 160Hz, 400Hz, 1kHz, 2.5kHz, 6.25kHz, and 16kHz) and this will repeat indefinitely. Reset, strobe, and decay times are shown on the MSGEQ7 datasheet attached.
+
+Out
+
+  Analog output signals corresponding to stereo Left and Right signals.
+
+Audio In/Out Jacks
+
+  Two mono/stereo jacks are supplied that provide audio input or output. Either can be used for either input or output. This allows the user to supply an audio signal and then output that audio signal to another destination.
+
+Installation
+
+  The MSGEQ7 Breakout Board allows for two methods of mounting in an enclosure or project box. The first is through the use of machine screws. The second is through utilizing the threaded audio jacks and nuts provided to mount the board directly to a panel.
+
+ 
+
+Typical Programming
+
+  The following is typical programming to read and output the signals utilizing a microprocessor and taking into account reset, strobe, and decay times. The values of each band on each channel is stored in an array called SpectrumOut. They can then be called on for programming. It should be noted that the MSGEQ7 IC experiences noise at very low volumes. Signals less than 6 to 10% of the analog signal range should be subtracted or filtered out in programming.
+
+   
+
+  int SpectrumStrobe = 2;
+
+  int SpectrumReset = 3;
+
+  int SpectrumOut[7];
+
+  int SpectrumBand;
+
+  void setup ()
+
+  {
+
+    pinMode(SpectrumReset, OUTPUT);
+
+    pinMode(SpectrumStrobe, OUTPUT);
+
+    digitalWrite(SpectrumReset, HIGH);
+
+    digitalWrite(SpectrumReset, LOW);
+
+    delayMicroseconds(75);
+
+    digitalWrite(SpectrumStrobe, HIGH);
+
+    delayMicroseconds(75);
+
+  }
+
+    void loop ()
+
+  {
+
+      digitalWrite(SpectrumReset, HIGH);
+
+    digitalWrite(SpectrumReset, LOW);
+
+    delayMicroseconds(75);
+
+    for(SpectrumBand = 0; SpectrumBand < 7; SpectrumBand++)
+
+    {
+
+    digitalWrite(SpectrumStrobe, LOW);
+
+    delayMicroseconds(80);
+
+    SpectrumOut[SpectrumBand] = analogRead(0);
+
+    digitalWrite(SpectrumStrobe, HIGH);
+
+    delayMicroseconds(80);
+
+    }
