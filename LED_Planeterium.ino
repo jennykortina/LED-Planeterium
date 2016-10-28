@@ -8,15 +8,15 @@
  *
  */
 
-int analogPin = 0; // MSGEQ7 OUT
-int strobePin = 2; // MSGEQ7 STROBE
-int resetPin = 4; // MSGEQ7 RESET
+int analogPin = 5; // MSGEQ7 OUT
+int strobePin = 7; // MSGEQ7 STROBE
+int resetPin = 8; // MSGEQ7 RESET
 int spectrumValue[7];
  
 // MSGEQ7 OUT pin produces values around 50-80
 // when there is no input, so use this value to
 // filter out a lot of the chaff.  
-int filterValue = 330;
+int filterValue = 80;
  
 // LED pins connected to the PWM pins on the Arduino
 

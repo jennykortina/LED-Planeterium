@@ -16,7 +16,7 @@ int spectrumValue[7];
 // MSGEQ7 OUT pin produces values around 50-80
 // when there is no input, so use this value to
 // filter out a lot of the chaff.  
-int filterValue = 330;
+int filterValue = 80;
  
 // LED pins connected to the PWM pins on the Arduino
 
